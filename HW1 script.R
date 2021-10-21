@@ -59,14 +59,16 @@ require(text)
 #----------------------------------------------------#
 #the following code hasn't been tested
 #---------------------------------------------------#
-tmp1 <- textEmbed(x     = tweet_data$tweet,
+tweet <- tweet_data$tweet
+
+tmp1 <- textEmbed(x     = tweet,
                   model = 'roberta-base',
                   layers = 9:12,
                   context_aggregation_layers = 'concatenate')
 
 tmp1$x
 
-length(tmp3$x)
+length(tmp1$x)
 
 #append embeddings to original  data
 
