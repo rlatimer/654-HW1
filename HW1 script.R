@@ -73,6 +73,8 @@ length(tmp3$x)
 
 #Task 1.5 Remove the two columns time and tweet from the dataset 
 
+clean_tweet <- tweet_data %>%
+  select(-time, -tweet)
 
 #Task 1.6 Prepare a recipe using the recipe() and prep() functions from the recipes 
 # package for final transformation of the variables in this dataset.
@@ -96,7 +98,7 @@ numeric   <- c('day',
 
 for(i in categorical){
   
-  tweet_data[,i] <- as.factor(tweet_data[,i])
+  clean_tweet[,i] <- as.factor(clean_tweet[,i])
   
 }
 
@@ -110,7 +112,7 @@ for(i in categorical){
 
 require(recipes)
 
-blueprint <- recipe(x  = tweet_data,
+blueprint <- recipe(x  = clean_tweet,
                     vars  = c(categorical,numeric,outcome,id),
                     roles = c(rep('predictor',4),'outcome','ID')) %>%
   
