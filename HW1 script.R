@@ -27,10 +27,10 @@ tweet_data$hour <- as.numeric(substr(tweet_data$time,12,13))
 
 #printing frequencies of new variables
 #probably a more elegant way to do this but this works for now
-table(day)
-table(month)
-table(date)
-table(hour)
+table(tweet_data$day)
+table(tweet_data$month)
+table(tweet_data$date)
+table(tweet_data$hour)
 
 
 #Task1.3
@@ -80,6 +80,56 @@ clean_tweet <- tweet_data %>%
 
 #Task 1.6 Prepare a recipe using the recipe() and prep() functions from the recipes 
 # package for final transformation of the variables in this dataset.
+
+#download developer version of recipes
+require(devtools)
+devtools::install_github("tidymodels/recipes")
+
+#Separate variables
+
+outcome <- c('sentiment')
+
+id      <- c('x')
+
+categorical <- c('month') 
+
+numeric   <- c('day',
+               'date',
+               'hour')
+
+#convert variables to factors
+for(i in categorical){
+  
+  clean_tweet[,i] <- as.factor(clean_tweet[,i])
+  
+}
+#Prework on cyclical variables
+#days sin and cos
+day_frame <- data.frame(clean_tweet$day,
+                        x = 1:1500)
+
+day_frame$x1 <- sin((2*pi*day_frame$x)/7)
+day_frame$x2 <- cos((2*pi*day_frame$x)/7)
+
+all_tweets <- bind_cols(day_frame, clean_tweet)
+
+#Blueprint development
+
+require(recipes)
+
+blueprint <- recipe(x  = clean_tweet,
+                    vars  = c(categorical,numeric,outcome,id),
+                    roles = c(rep('predictor',4),'outcome','ID'),
+                    n_clean_tweet ~ day, data = clean_tweet) %>%
+                    step_harmonic(year, frequency = 1/7, cycle_size = 1)
+#cyclical variables
+
+#month recorded into dummy variables
+                    step_dummy(all_of(categorical),one_hot=TRUE)\
+#all numeric embeddings are standarized
+
+#######################################################################################
+#from lecture notes
 
 # 2) List of variable types
 
