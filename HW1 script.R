@@ -1,4 +1,4 @@
-
+#TASK 1
 #Task 1.1: Import tweet data
 tweet_data <- read.csv('https://raw.githubusercontent.com/uo-datasci-specialization/c4-ml-fall-2021/main/data/tweet_sub.csv')
 
@@ -133,20 +133,23 @@ blueprint <- recipe(x  = clean_tweet,
                                      paste0(props,'_ns_1'),
                                      paste0(props,'_ns_2'),
                                      paste0(props,'_ns_3'))
+
+blueprint
+
 #######################################################################################
 #from lecture notes
 
 # 2) List of variable types
 
-outcome <- c('sentiment')
+#outcome <- c('sentiment')
 
-id      <- c('x')
+#id      <- c('x')
 
-categorical <- c('month') 
+#categorical <- c('month') 
 
-numeric   <- c('day',
-               'date',
-               'hour')
+#numeric   <- c('day',
+#               'date',
+#               'hour')
 
 #props      <- c('')
 
@@ -223,5 +226,52 @@ baked_tweet_data
 
 #Task 1.8 Remove the original day,date, and hour variables from the dataset 
 
+finished_pie <- baked_tweet_data %>%
+  select(-day, -date, -hour)
+
 #Task 1.9 Export the final dataset (1500 x 778) as a .csv file and 
 # upload it to Canvas along your submission.
+
+
+#TASK 2
+#Task 2.1
+#Import Oregon Testing Data
+ortest_data <- read.csv('https://raw.githubusercontent.com/uo-datasci-specialization/c4-ml-fall-2021/main/data/oregon.csv')
+
+#Task 2.2
+#Create two new columns to show the date and month the test was taken (as numeric variables)
+
+#Remove the column tst_dt from the dataset 
+
+#Calculate and print the frequencies for the new columns (date and month)
+
+
+#Task 2.3
+#Use the ff_glimpse() function from the finalfit package to provide a snapshot of missingness 
+#this function also returns the number of levels for categorical variables
+#Remove any variable with large amount of missingness (e.g. more than 75%)
+
+#Task 2.4
+#Most of the variables in this dataset are categorical (binary variable with a Yes and No response)
+#Check the frequency of unique values for all categorical variables
+#If there is any inconsistency (e.g., Yes is coded as both 'y' and 'Y') for any of these variables 
+#in terms of how values are coded, fix them. 
+#Also, check the distribution of numeric variables and make sure there is no anomaly.
+
+
+#Task 2.5 
+#Prepare a recipe
+#See homework instructions for specific order of variables
+
+#Task 2.6
+#Apply the recipe to the whole dataset
+
+#Task 2.7
+#Remove the original date and month variables
+
+#Task 2.8
+#Export the final dataset (189,426 x 74) as a .csv file
+
+
+
+
