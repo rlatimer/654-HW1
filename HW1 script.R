@@ -103,7 +103,8 @@ for(i in categorical){
   clean_tweet[,i] <- as.factor(clean_tweet[,i])
   
 }
-#Prework on cyclical variables
+#Prework on cyclical variables - attempting to create sin and cos columns outside
+#  of main data to then add to the overall recipe 
 #days sin and cos
 day_frame <- data.frame(clean_tweet$day,
                         x = 1:1500)
@@ -119,15 +120,19 @@ require(recipes)
 
 blueprint <- recipe(x  = clean_tweet,
                     vars  = c(categorical,numeric,outcome,id),
-                    roles = c(rep('predictor',4),'outcome','ID'),
-                    n_clean_tweet ~ day, data = clean_tweet) %>%
-                    step_harmonic(year, frequency = 1/7, cycle_size = 1)
+                    roles = c(rep('predictor',4),'outcome','ID')) %>%
 #cyclical variables
-
+                    step_harmonic(all_tweets, frequency = 1/7, cycle_size = 1) %>%
 #month recorded into dummy variables
-                    step_dummy(all_of(categorical),one_hot=TRUE)\
+                    step_dummy(all_of(categorical),one_hot=TRUE)%>%
 #all numeric embeddings are standarized
-
+                    step_ns(all_of(numeric),all_of(props),deg_free=3) %>%
+                      step_normalize(paste0(numeric,'_ns_1'),
+                                     paste0(numeric,'_ns_2'),
+                                     paste0(numeric,'_ns_3'),
+                                     paste0(props,'_ns_1'),
+                                     paste0(props,'_ns_2'),
+                                     paste0(props,'_ns_3'))
 #######################################################################################
 #from lecture notes
 
