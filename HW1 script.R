@@ -71,11 +71,13 @@ tmp1$x
 length(tmp1$x)
 
 #append embeddings to original  data
-
+tweet_emb <- cbind(tweet_data,
+                   as.data.frame(tmp1$x)
+)
 
 #Task 1.5 Remove the two columns time and tweet from the dataset 
 
-clean_tweet <- tweet_data %>%
+clean_tweet <- tweet_emb %>%
   select(-time, -tweet)
 
 #Task 1.6 Prepare a recipe using the recipe() and prep() functions from the recipes 
