@@ -267,6 +267,18 @@ table(clean_ortest$date)
 #this function also returns the number of levels for categorical variables
 #Remove any variable with large amount of missingness (e.g. more than 75%)
 
+#install.packages("finalfit")
+library(finalfit)
+
+dependent = NULL
+explanatory = NULL
+clean_ortest %>%
+  ff_glimpse(dependent, explanatory)
+
+#removing variables above 75%
+ORtest <- clean_ortest %>%
+  select(-ayp_lep)
+
 #Task 2.4
 #Most of the variables in this dataset are categorical (binary variable with a Yes and No response)
 #Check the frequency of unique values for all categorical variables
