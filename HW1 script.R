@@ -286,6 +286,17 @@ ORtest <- clean_ortest %>%
 #in terms of how values are coded, fix them. 
 #Also, check the distribution of numeric variables and make sure there is no anomaly.
 
+#table to display frequency of unique categorical variables
+lapply(ORtest, table)
+
+#trgt_assist_fg has N, y, and Y variables
+#verifying class
+class(ORtest$trgt_assist_fg)
+#modified y to Y
+ORtest$trgt_assist_fg[ORtest$trgt_assist_fg == "y"] <- "Y"
+
+#display distribution of numeric variables
+
 
 #Task 2.5 
 #Prepare a recipe
