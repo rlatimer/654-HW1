@@ -241,10 +241,26 @@ ortest_data <- read.csv('https://raw.githubusercontent.com/uo-datasci-specializa
 #Task 2.2
 #Create two new columns to show the date and month the test was taken (as numeric variables)
 
+#separate tst_dt column into a vector
+x <- ortest_data$tst_dt
+strsplit(x,'/')
+
+#separate month from vector
+sapply(strsplit(x,'/'),`[`,1)
+
+#make month numeric
+ortest_data$month <- as.numeric(sapply(strsplit(x,'/'),`[`,1))
+
+#separate day and make numeric
+ortest_data$date <- as.numeric(sapply(strsplit(x,'/'),`[`,2))
+
 #Remove the column tst_dt from the dataset 
+clean_ortest <- ortest_data %>%
+  select(-tst_dt)
 
 #Calculate and print the frequencies for the new columns (date and month)
-
+table(clean_ortest$month)
+table(clean_ortest$date)
 
 #Task 2.3
 #Use the ff_glimpse() function from the finalfit package to provide a snapshot of missingness 
