@@ -489,6 +489,24 @@ p
 #Task 2.5 
 #Prepare a recipe
 #See homework instructions for specific order of variables
+require(recipes)
+# List of variable types
+
+outcome <- c('score')
+
+id      <- c('id')
+
+categorical <- c('sex','ethnic_cd','tst_bnch','migrant_ed_fg',
+                 'ind_ed_fg','sp_ed_fg','tag_ed_fg','econ_dsvntg','stay_in_dist',
+                 'stay_in_schl','dist_sped','trgt_assist_fg',
+                 'ayp_dist_partic','ayp_schl_partic','ayp_dist_prfrm',
+                 'ayp_schl_prfrm','rc_dist_partic','rc_schl_partic','rc_dist_prfrm',
+                 'rc_schl_prfrm','grp_rpt_dist_partic','grp_rpt_schl_partic',
+                 'grp_rpt_dist_prfrm','grp_rpt_schl_prfrm') 
+
+numeric   <- c('enr_grd')
+
+cyclic <- c('date', 'month')
 
 #Task 2.6
 #Apply the recipe to the whole dataset
