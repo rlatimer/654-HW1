@@ -463,7 +463,10 @@ ORtest <- clean_ortest %>%
 #Also, check the distribution of numeric variables and make sure there is no anomaly.
 
 #table to display frequency of unique categorical variables
-lapply(ORtest, table)
+categorical <- ORtest %>%
+  select(2,3,6:26)
+
+lapply(categorical, table)
 
 #trgt_assist_fg has N, y, and Y variables
 #verifying class
