@@ -504,7 +504,7 @@ categorical <- c('sex','ethnic_cd','tst_bnch','migrant_ed_fg',
                  'rc_schl_prfrm','grp_rpt_dist_partic','grp_rpt_schl_partic',
                  'grp_rpt_dist_prfrm','grp_rpt_schl_prfrm') 
 
-numeric   <- c('enr_grd')
+numeric   <- c('enrl_grd')
 
 cyclic <- c('date', 'month')
 # Convert all nominal, ordinal, and binary variables to factors
@@ -517,7 +517,7 @@ for(i in categorical){
 }
 
 
-blueprint <- recipe(x  = ORtest,
+blueprint2 <- recipe(x  = ORtest,
                     vars  = c(categorical,numeric,cyclic,outcome,id),
                     roles = c(rep('predictor',27),'outcome','ID')) %>%
   
@@ -553,7 +553,7 @@ blueprint <- recipe(x  = ORtest,
   
   step_dummy(all_of(categorical),one_hot=TRUE )
 
-blueprint
+blueprint2
 #Task 2.6
 #Apply the recipe to the whole dataset
 
