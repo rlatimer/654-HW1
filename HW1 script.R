@@ -61,7 +61,7 @@ tweet <- tweet_data$tweet
 
 tmp1 <- textEmbed(x     = tweet,
                   model = 'roberta-base',
-                  layers = 9:12,
+                  layers = 12,
                   context_aggregation_layers = 'concatenate')
 
 tmp1$x
