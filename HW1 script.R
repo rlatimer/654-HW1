@@ -474,8 +474,17 @@ class(ORtest$trgt_assist_fg)
 #modified y to Y
 ORtest$trgt_assist_fg[ORtest$trgt_assist_fg == "y"] <- "Y"
 
-#display distribution of numeric variables
+#confirm change was made:
+#table(ORtest$trgt_assist_fg)
 
+#display distribution of numeric variables
+numeric <- ORtest %>%
+  select(1,4,27:29)
+
+require(ggplot2)
+p <- ggplot(numeric, aes(x=enrl_grd, y=score)) + 
+  geom_point()
+p
 
 #Task 2.5 
 #Prepare a recipe
