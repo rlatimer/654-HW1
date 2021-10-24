@@ -507,7 +507,53 @@ categorical <- c('sex','ethnic_cd','tst_bnch','migrant_ed_fg',
 numeric   <- c('enr_grd')
 
 cyclic <- c('date', 'month')
+# Convert all nominal, ordinal, and binary variables to factors
+# Leave the rest as is
 
+for(i in categorical){
+  
+  ORtest[,i] <- as.factor(ORtest[,i])
+  
+}
+
+
+blueprint <- recipe(x  = ORtest,
+                    vars  = c(categorical,numeric,cyclic,outcome,id),
+                    roles = c(rep('predictor',27),'outcome','ID')) %>%
+  
+  # for all 48 predictors, create an indicator variable for missingness
+  
+  step_indicate_na(all_of(categorical),all_of(numeric),all_of(cyclic)) %>%
+  
+  # Remove the variable with zero variance, this will also remove the missingness 
+  # variables if there is no missingess
+  
+  step_zv(all_numeric()) %>%
+  
+  # Impute the missing values using mean and mode.
+  
+  step_impute_mean(all_of(numeric)) %>%
+  step_impute_mode(all_of(categorical)) %>%
+  
+  #recode cyclic predictors into two new variables of sin and cos terms,
+  step_harmonic(date, frequency = 1/31, cycle_size = 1) %>%
+  step_harmonic(month, frequency = 1/12, cycle_size = 1) %>%
+  
+  # Natural splines for numeric variables and proportions
+  
+  step_ns(all_of(numeric),deg_free=3) %>%
+  
+  # Standardize the natural splines of numeric variables
+  
+  step_normalize(paste0(numeric,'_ns_1'),
+                 paste0(numeric,'_ns_2'),
+                 paste0(numeric,'_ns_3')) %>%
+  
+  # One-hot encoding for all categorical variables
+  
+  step_dummy(all_of(categorical),one_hot=TRUE )
+
+blueprint
 #Task 2.6
 #Apply the recipe to the whole dataset
 
