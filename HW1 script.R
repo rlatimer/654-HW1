@@ -519,7 +519,7 @@ for(i in categorical){
 
 blueprint2 <- recipe(x  = ORtest,
                     vars  = c(categorical,numeric,cyclic,outcome,id),
-                    roles = c(rep('predictor',27),'outcome','ID')) %>%
+                    roles = c(rep('predictor',27),'outcome','id')) %>%
   
   # for all 48 predictors, create an indicator variable for missingness
   
