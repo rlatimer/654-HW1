@@ -554,11 +554,23 @@ blueprint2 <- recipe(x  = ORtest,
   step_dummy(all_of(categorical),one_hot=TRUE )
 
 blueprint2
+
+prepare2 <- prep(blueprint2, 
+                 training = ORtest)
+prepare2
+
 #Task 2.6
 #Apply the recipe to the whole dataset
 
+baked_ORtest <- bake(prepare2, new_data = ORtest)
+
+baked_ORtest
+
 #Task 2.7
 #Remove the original date and month variables
+
+finished_ORtest <- baked_ORtest %>%
+  select(-date, -month)
 
 #Task 2.8
 #Export the final dataset (189,426 x 74) as a .csv file
